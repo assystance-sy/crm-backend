@@ -24,6 +24,7 @@ const schema = new mongoose.Schema(
       validate: (value) => integerValidator(value),
     },
     weight: { type: Number, default: 0, min: 0 },
+    origin: { type: mongoose.ObjectId, ref: "Country" },
   },
   { timestamps: true },
 );
