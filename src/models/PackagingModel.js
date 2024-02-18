@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { integerValidator } = require("../validators");
+const { integerValidator, barcodeValidator } = require("../validators");
 const { packagingTypes } = require("../enums");
 
 const schema = new mongoose.Schema({
@@ -14,6 +14,15 @@ const schema = new mongoose.Schema({
     default: 1,
     min: 1,
     validate: (value) => integerValidator(value),
+  },
+  barcode: {
+    type: String,
+    required: true,
+    immutable: true,
+    unique: true,
+    index: true,
+    validate: (value) => barcodeValidator(value),
+    trim: true,
   },
 });
 
