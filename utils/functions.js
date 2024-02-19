@@ -17,6 +17,36 @@ function generateSerialNumber(options = {}) {
   return `${prefix}${serialNumber.toString().padStart(length, "0")}${suffix}`;
 }
 
+/**
+ * Formats an address into a single string.
+ * @param {Object} input - The address object.
+ * @param {string} [input.street=""] - The street of the address.
+ * @param {string} [input.city=""] - The city of the address.
+ * @param {string} [input.province=""] - The province of the address.
+ * @param {string} [input.country=""] - The country of the address.
+ * @param {string} [input.postalCode=""] - The postal code of the address.
+ * @returns {string} The formatted address.
+ */
+function formatAddress(input = {}) {
+  const {
+    street = "",
+    city = "",
+    province = "",
+    country = "",
+    postalCode = "",
+  } = input;
+
+  const fullAddress = [];
+  if (street) fullAddress.push(street);
+  if (city) fullAddress.push(city);
+  if (province) fullAddress.push(province);
+  if (country) fullAddress.push(country);
+  if (postalCode) fullAddress.push(postalCode);
+
+  return fullAddress.join(", ");
+}
+
 module.exports = {
   generateSerialNumber,
+  formatAddress,
 };

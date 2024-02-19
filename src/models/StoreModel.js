@@ -37,6 +37,14 @@ const schema = new mongoose.Schema({
   priority: { type: Number, default: 1, min: 1 },
 });
 
+schema.virtual("lat").get(function () {
+  return this.location.coordinates?.[1];
+});
+
+schema.virtual("lng").get(function () {
+  return this.location.coordinates?.[0];
+});
+
 const model = mongoose.model("Store", schema);
 
 module.exports = model;

@@ -60,7 +60,7 @@ class BaseRoutes {
    * @param {Function} callback - Callback function that extends the routes.
    */
   extendRoutes(callback) {
-    callback(this.router);
+    callback(this.router, this.controller);
   }
 
   /**
