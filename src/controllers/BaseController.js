@@ -143,27 +143,52 @@ class BaseController {
   async getSchema(req, res, next) {
     try {
       // Get the schema definition from the model
-      const schemaDefinition = this.Model.schema.obj;
+      const schemaDefinition = this.Model.schema.paths;
 
       // Initialize an object to store field names and types
       const schemaWithDetails = {};
 
-      // Iterate through the schema definition
-      for (const fieldName in schemaDefinition) {
-        // Get the type of each field
+      // Helper function to check if a field is nested
+      const isNested = (path) => {
+        return path.includes(".");
+      };
+
+      // Process schema paths
+      for (const path in schemaDefinition) {
         const fieldInfo = {};
 
+        // Get the type of the field
+        const fieldType = schemaDefinition[path].instance;
+
         // Check if the field has an enum defined
-        if (schemaDefinition[fieldName].enum) {
+        if (
+          schemaDefinition[path].enumValues &&
+          schemaDefinition[path].enumValues.length > 0
+        ) {
           fieldInfo.type = "enum";
-          fieldInfo.enumValues = schemaDefinition[fieldName].enum;
+          fieldInfo.enumValues = schemaDefinition[path].enumValues;
+        } else if (fieldType === "ObjectID") {
+          // If the field type is ObjectId, identify the referenced collection
+          fieldInfo.type = "ObjectId";
+          fieldInfo.refCollection = schemaDefinition[path].options.ref;
         } else {
-          // If no enum, store the field type
-          fieldInfo.type = schemaDefinition[fieldName].type.name;
+          // For other types, store the field type
+          fieldInfo.type = fieldType;
         }
 
         // Store the field details in the result object
-        schemaWithDetails[fieldName] = fieldInfo;
+        if (isNested(path)) {
+          const [parentPath, nestedField] = path.split(".");
+          if (!schemaWithDetails[parentPath]) {
+            schemaWithDetails[parentPath] = {
+              type: "object",
+              properties: {},
+            };
+          }
+          schemaWithDetails[parentPath].properties[nestedField] = fieldInfo;
+        } else {
+          schemaWithDetails[path] = fieldInfo;
+        }
       }
 
       // Send success response
