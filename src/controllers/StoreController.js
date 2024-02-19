@@ -1,4 +1,5 @@
 const StoreModel = require("../models/StoreModel");
+const StaffModel = require("../models/SatffModel");
 const BaseController = require("./BaseController");
 const { formatAddress } = require("../../utils/functions");
 const { generateExcel } = require("../services/excelService");
@@ -24,6 +25,7 @@ class StoreController extends BaseController {
         "address.province",
         "merchant",
       ]);
+      const staff = await StaffModel.find();
 
       // Format the stores data for Excel export
       const formattedStores = stores.map((store) => {
@@ -31,6 +33,25 @@ class StoreController extends BaseController {
         const coordinateQuery = encodeURIComponent(
           `${store.get("lat")},${store.get("lng")}`,
         );
+        const contactPersons = staff.reduce((output, person) => {
+          if (person?.store?.toString() !== store._id.toString()) return output;
+          const phoneNumbers = person?.phones?.map((p) => p.number)?.join(", ");
+          const contactCount = Object.keys(output).length / 2 + 1;
+
+          if (Object.keys(output).length === 0) {
+            Object.assign(output, {
+              "Contact Person": person.firstName,
+              Phone: phoneNumbers,
+            });
+          } else {
+            Object.assign(output, {
+              [`Contact Person ${contactCount}`]: person.firstName,
+              [`Phone  ${contactCount}`]: phoneNumbers,
+            });
+          }
+
+          return output;
+        }, {});
         return {
           Name: `${name} - #${code}`,
           Merchant: merchant?.name || "",
@@ -50,6 +71,7 @@ class StoreController extends BaseController {
           Lat: store.get("lat"),
           Lng: store.get("lng"),
           "Google Map URL": `https://www.google.com/maps/search/?api=1&query=${coordinateQuery}`,
+          ...contactPersons,
         };
       });
 
