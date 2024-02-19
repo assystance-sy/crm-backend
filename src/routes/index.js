@@ -11,11 +11,13 @@ const ProvinceRoutes = require("./ProvinceRoutes");
 const PurchaseOrderRoutes = require("./PurchaseOrderRoutes");
 const StoreItemRoutes = require("./StoreItemRoutes");
 const StoreRoutes = require("./StoreRoutes");
+const CityRoutes = require("./CityRoutes");
 
 router.get("/ping", (req, res) => res.locals.sendSuccessResponse(res, "pong"));
 router.use("/address", AddressRoutes);
 router.use("/brand", BrandRoutes);
 router.use("/category", CategoryRoutes);
+router.use("/cities", CityRoutes);
 router.use("/country", CountryRoutes);
 router.use("/merchant", MerchantRoutes);
 router.use("/packaging", PackagingRoutes);
