@@ -20,7 +20,7 @@ router.use("/country", CountryRoutes);
 router.use("/merchant", MerchantRoutes);
 router.use("/packaging", PackagingRoutes);
 router.use("/product", ProductRoutes);
-router.use("/provice", ProvinceRoutes);
+router.use("/province", ProvinceRoutes);
 router.use("/purchaseOrder", PurchaseOrderRoutes);
 router.use("/storeItem", StoreItemRoutes);
 router.use("/store", StoreRoutes);
