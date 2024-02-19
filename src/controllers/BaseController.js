@@ -20,11 +20,12 @@ class BaseController {
    */
   async getAll(req, res, next) {
     try {
-      const { page = "1", limit = "10", ...query } = req.query;
+      const { page = "1", limit = "10", populate = [], ...query } = req.query;
       const skip = (parseInt(page, 10) - 1) * parseInt(limit, 10);
 
       // Find resources with pagination
       const resources = await this.Model.find(query)
+        .populate(populate)
         .skip(skip)
         .limit(parseInt(limit, 10));
 
