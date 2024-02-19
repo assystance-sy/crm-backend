@@ -1,8 +1,19 @@
 const mongoose = require("mongoose");
 
+const addressSchema = new mongoose.Schema(
+  {
+    street: { type: String },
+    city: { type: mongoose.ObjectId, ref: "City" },
+    province: { type: mongoose.ObjectId, ref: "Province" },
+    postalCode: { type: String, uppercase: true },
+    country: { type: mongoose.ObjectId, ref: "Country" },
+  },
+  { _id: false },
+);
+
 const schema = new mongoose.Schema({
   name: { type: String },
-  address: { type: mongoose.ObjectId, ref: "Address" },
+  address: addressSchema,
   location: {
     type: {
       type: String,
@@ -23,6 +34,7 @@ const schema = new mongoose.Schema({
   },
   merchant: { type: mongoose.ObjectId, ref: "Merchant" },
   remark: { type: String },
+  priority: { type: Number, default: 1, min: 1 },
 });
 
 const model = mongoose.model("Store", schema);

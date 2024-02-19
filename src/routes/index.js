@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const AddressRoutes = require("./AddressRoutes");
 const BrandRoutes = require("./BrandRoutes");
 const CategoryRoutes = require("./CategoryRoutes");
 const CountryRoutes = require("./CountryRoutes");
@@ -15,7 +14,6 @@ const CityRoutes = require("./CityRoutes");
 const PurchaseOrderItemRoutes = require("./PurchaseOrderItemRoutes");
 
 router.get("/ping", (req, res) => res.locals.sendSuccessResponse(res, "pong"));
-router.use("/address", AddressRoutes);
 router.use("/brand", BrandRoutes);
 router.use("/category", CategoryRoutes);
 router.use("/city", CityRoutes);
