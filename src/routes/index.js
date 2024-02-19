@@ -18,7 +18,7 @@ router.get("/ping", (req, res) => res.locals.sendSuccessResponse(res, "pong"));
 router.use("/address", AddressRoutes);
 router.use("/brand", BrandRoutes);
 router.use("/category", CategoryRoutes);
-router.use("/cities", CityRoutes);
+router.use("/city", CityRoutes);
 router.use("/country", CountryRoutes);
 router.use("/merchant", MerchantRoutes);
 router.use("/packaging", PackagingRoutes);
