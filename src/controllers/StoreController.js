@@ -32,7 +32,7 @@ class StoreController extends BaseController {
           `${store.get("lat")},${store.get("lng")}`,
         );
         return {
-          Name: name,
+          Name: `${name} - #${code}`,
           Merchant: merchant?.name || "",
           Code: code,
           Street: address?.street,
