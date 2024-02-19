@@ -12,6 +12,7 @@ const StoreItemRoutes = require("./StoreItemRoutes");
 const StoreRoutes = require("./StoreRoutes");
 const CityRoutes = require("./CityRoutes");
 const PurchaseOrderItemRoutes = require("./PurchaseOrderItemRoutes");
+const StaffRoutes = require("./StaffRoutes");
 
 router.get("/ping", (req, res) => res.locals.sendSuccessResponse(res, "pong"));
 router.use("/brand", BrandRoutes);
@@ -24,6 +25,7 @@ router.use("/product", ProductRoutes);
 router.use("/province", ProvinceRoutes);
 router.use("/purchaseOrder", PurchaseOrderRoutes);
 router.use("/purchaseOrderItem", PurchaseOrderItemRoutes);
+router.use("/staff", StaffRoutes);
 router.use("/storeItem", StoreItemRoutes);
 router.use("/store", StoreRoutes);
 
