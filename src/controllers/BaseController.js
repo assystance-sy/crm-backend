@@ -20,12 +20,19 @@ class BaseController {
    */
   async getAll(req, res, next) {
     try {
-      const { page = "1", limit = "10", populate = [], ...query } = req.query;
+      const {
+        page = "1",
+        limit = "10",
+        populate = [],
+        sort = "-_id",
+        ...query
+      } = req.query;
       const skip = (parseInt(page, 10) - 1) * parseInt(limit, 10);
 
       // Find resources with pagination
       const resources = await this.Model.find(query)
         .populate(populate)
+        .sort(sort)
         .skip(skip)
         .limit(parseInt(limit, 10));
 
@@ -55,10 +62,12 @@ class BaseController {
    */
   async getOne(req, res, next) {
     try {
+      const { populate = [] } = req.query;
+
       // Find resource by ID or throw NotFoundError
-      const resource = await this.Model.findById(req.params.id).orFail(
-        new NotFoundError(),
-      );
+      const resource = await this.Model.findById(req.params.id)
+        .populate(populate)
+        .orFail(new NotFoundError());
 
       // Send success response with the retrieved resource
       res.locals.sendSuccessResponse(res, resource);
