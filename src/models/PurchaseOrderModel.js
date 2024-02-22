@@ -13,7 +13,7 @@ schema.virtual("items", {
   foreignField: "purchaseOrder",
 });
 
-schema.pre("save", async function (next) {
+schema.pre("validate", async function (next) {
   if (!this.orderNumber) {
     const count = await mongoose
       .model("PurchaseOrder")

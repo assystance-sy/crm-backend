@@ -1,7 +1,7 @@
 const BaseRoutes = require("./BaseRoutes");
-const StoreController = require("../controllers/StoreController");
+const PurchaseOrderController = require("../controllers/PurchaseOrderController");
 
-const routes = new BaseRoutes(new StoreController());
+const routes = new BaseRoutes(new PurchaseOrderController());
 
 routes.getSchema();
 routes.getAll();

@@ -1,3 +1,5 @@
+const { DateTime } = require("luxon");
+
 /**
  * Generates a serial number with customizable prefix, suffix, length, and starting value.
  * @param {Object} [options={}] - Additional options for customizing the serial number.
@@ -8,13 +10,16 @@
  * @returns {string} The generated serial number.
  */
 function generateSerialNumber(options = {}) {
-  const { prefix = "", suffix = "", length = 8, startAt = 0 } = options || {};
+  const { prefix = "", suffix = "", length = 3, startAt = 0 } = options || {};
 
   // Calculate the serial number based on the starting value
   const serialNumber = startAt + 1;
 
+  // Get current date
+  const currentDate = DateTime.local().toFormat("yyyyMMdd");
+
   // Construct the serial number with the prefix, serial number, and suffix, padding with leading zeros
-  return `${prefix}${serialNumber.toString().padStart(length, "0")}${suffix}`;
+  return `${prefix}${currentDate}${serialNumber.toString().padStart(length, "0")}${suffix}`;
 }
 
 /**
