@@ -1,8 +1,6 @@
 const mongoose = require("mongoose");
 
 const schema = new mongoose.Schema({
-  merchant: { type: mongoose.ObjectId, ref: "Merchant" },
-  store: { type: mongoose.ObjectId, ref: "Store" },
   purchaseOrder: {
     type: mongoose.ObjectId,
     ref: "PurchaseOrder",
