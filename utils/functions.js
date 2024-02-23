@@ -51,7 +51,21 @@ function formatAddress(input = {}) {
   return fullAddress.join(", ");
 }
 
+/**
+ * Parse a search value into a case-insensitive regular expression for text search.
+ *
+ * @param {string} value - The search value to be parsed into a regular expression.
+ * @returns {Object} - A regular expression object suitable for MongoDB queries.
+ */
+const parseQueryToRegex = (value) => ({
+  $regex: new RegExp(
+    `^.*${value.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}.*$`,
+    "gi",
+  ),
+});
+
 module.exports = {
   generateSerialNumber,
   formatAddress,
+  parseQueryToRegex,
 };
